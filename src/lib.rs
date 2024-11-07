@@ -51,6 +51,7 @@ pub mod entities;
 pub mod error;
 pub mod firefish;
 pub mod friendica;
+mod generic;
 pub mod gotosocial;
 pub mod mastodon;
 pub mod megalodon;

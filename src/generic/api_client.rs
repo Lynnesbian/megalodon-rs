@@ -21,7 +21,7 @@ enum Params<'a> {
 }
 
 impl APIClient {
-    pub fn new(base_url: String, access_token: Option<String>, user_agent: Option<String>) -> Self {
+    pub fn new(base_url: String, access_token: Option<String>, user_agent: Option<String>) -> Result<Self, MegalodonError> {
         let ua: String;
         match user_agent {
             Some(agent) => ua = agent,
@@ -30,14 +30,13 @@ impl APIClient {
 
         let client = reqwest::Client::builder()
             .user_agent(ua)
-            .build()
-            .expect("Failed to initialise TLS backend!");
+            .build()?;
 
-        Self {
+        Ok(Self {
             access_token,
             base_url,
             client,
-        }
+        })
     }
 
     async fn request<T>(
